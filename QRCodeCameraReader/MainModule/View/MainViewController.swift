@@ -12,13 +12,15 @@ import AVFoundation
 class MainViewController: UIViewController {
     
     // MARK: - Properties
-
-    var presenter: MainViewPresenterProtocol!
+    
+    //var presenter: MainPresenter?
     
     var captureSession = AVCaptureSession()
-    let output = AVCaptureMetadataOutput()
     var videoPreviewLayer = AVCaptureVideoPreviewLayer()
-    
+    let output = AVCaptureMetadataOutput()
+    var outputObject: AVMetadataMachineReadableCodeObject?
+    var link: String?
+
     private var mainView: MainView? {
         guard isViewLoaded else { return nil }
         return view as? MainView
@@ -30,19 +32,36 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        scannerSettings()
+        
+        startCameraSettings()
+        
         mainView?.scanButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
-    func scannerSettings() {
-        output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-        output.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
-        
-        captureSession.addInput(presenter.input!)
-        captureSession.addOutput(output)
+    func startCameraSettings() {
+        setupInput()
+        setupOutput()
         
         videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        videoPreviewLayer.frame = view.layer.bounds
+        videoPreviewLayer.frame = (view?.layer.bounds)!
+    }
+    
+    func setupInput() {
+        guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
+            fatalError("No video device found") }
+        do {
+            let input = try AVCaptureDeviceInput(device: captureDevice)
+            captureSession.addInput(input)
+        } catch {
+            print(error)
+            return
+        }
+    }
+    
+    func setupOutput() {
+        output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+        output.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
+        captureSession.addOutput(output)
     }
     
     @objc func buttonTapped() {
@@ -54,23 +73,27 @@ class MainViewController: UIViewController {
 extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         
-        switch metadataObjects.count {
-        case 0:
+        if metadataObjects.count == 0 {
             mainView?.qrCodeFrameView.frame = CGRect.zero
             mainView?.messageLabel.text = "No QR code is detected"
-            
-        default:
+            return
+        }
+        
+        if metadataObjects.count > 0 {
             if let object = metadataObjects.first as? AVMetadataMachineReadableCodeObject {
                 if object.type == AVMetadataObject.ObjectType.qr {
                     let barCodeObject = videoPreviewLayer.transformedMetadataObject(for: object)
                     mainView?.qrCodeFrameView.frame = barCodeObject!.bounds
-                    mainView?.bringSubviewToFront(mainView!.qrCodeFrameView)
+                    view.bringSubviewToFront(mainView!.qrCodeFrameView)
                     
                     mainView?.messageLabel.text = "\(String(describing: object.stringValue ?? ""))"
-                    
                     self.present(ModalViewController(), animated: true)
                 }
             }
+            
+        } else {
+            mainView?.qrCodeFrameView.frame = CGRect.zero
+            mainView?.messageLabel.text = "No QR code is detected"
         }
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D6365FBC28FF021300DDB045 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6365FBB28FF021300DDB045 /* Model.swift */; };
 		D695167128FEB4990085E519 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D695167028FEB4990085E519 /* AppDelegate.swift */; };
 		D695167328FEB4990085E519 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D695167228FEB4990085E519 /* SceneDelegate.swift */; };
 		D695167528FEB4990085E519 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D695167428FEB4990085E519 /* ViewController.swift */; };
@@ -17,11 +18,14 @@
 		D6A2782428FEB7B700818B91 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D6A2782328FEB7B700818B91 /* SnapKit */; };
 		D6A2782928FEB88200818B91 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2782828FEB88200818B91 /* MainViewController.swift */; };
 		D6A2782B28FEB8BC00818B91 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2782A28FEB8BC00818B91 /* MainPresenter.swift */; };
-		D6A2782E28FEB92000818B91 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2782D28FEB92000818B91 /* CameraManager.swift */; };
 		D6A2783028FEBB2A00818B91 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2782F28FEBB2A00818B91 /* Extension.swift */; };
+		D6A2783528FEC32C00818B91 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2783428FEC32C00818B91 /* ModalView.swift */; };
+		D6A2783728FEC34F00818B91 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2783628FEC34F00818B91 /* ModalViewController.swift */; };
+		D6A2783928FEC59A00818B91 /* CaptureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2783828FEC59A00818B91 /* CaptureManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D6365FBB28FF021300DDB045 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		D695166D28FEB4990085E519 /* QRCodeCameraReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QRCodeCameraReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D695167028FEB4990085E519 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D695167228FEB4990085E519 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -33,8 +37,10 @@
 		D6A2782028FEB76400818B91 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D6A2782828FEB88200818B91 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D6A2782A28FEB8BC00818B91 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
-		D6A2782D28FEB92000818B91 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		D6A2782F28FEBB2A00818B91 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		D6A2783428FEC32C00818B91 /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
+		D6A2783628FEC34F00818B91 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
+		D6A2783828FEC59A00818B91 /* CaptureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +74,7 @@
 		D695166F28FEB4990085E519 /* QRCodeCameraReader */ = {
 			isa = PBXGroup;
 			children = (
+				D6A2783128FEC30800818B91 /* ModalModule */,
 				D6A2782C28FEB8E300818B91 /* Services */,
 				D6A2782528FEB7DE00818B91 /* MainModule */,
 				D695167028FEB4990085E519 /* AppDelegate.swift */,
@@ -77,6 +84,7 @@
 				D695167928FEB49B0085E519 /* Assets.xcassets */,
 				D695167B28FEB49B0085E519 /* LaunchScreen.storyboard */,
 				D695167E28FEB49B0085E519 /* Info.plist */,
+				D6365FBB28FF021300DDB045 /* Model.swift */,
 			);
 			path = QRCodeCameraReader;
 			sourceTree = "<group>";
@@ -111,9 +119,34 @@
 		D6A2782C28FEB8E300818B91 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D6A2782D28FEB92000818B91 /* CameraManager.swift */,
+				D6A2783828FEC59A00818B91 /* CaptureManager.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		D6A2783128FEC30800818B91 /* ModalModule */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2783328FEC31E00818B91 /* Presenter */,
+				D6A2783228FEC31700818B91 /* View */,
+			);
+			path = ModalModule;
+			sourceTree = "<group>";
+		};
+		D6A2783228FEC31700818B91 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2783428FEC32C00818B91 /* ModalView.swift */,
+				D6A2783628FEC34F00818B91 /* ModalViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D6A2783328FEC31E00818B91 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,11 +227,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D695167528FEB4990085E519 /* ViewController.swift in Sources */,
-				D6A2782E28FEB92000818B91 /* CameraManager.swift in Sources */,
+				D6A2783928FEC59A00818B91 /* CaptureManager.swift in Sources */,
 				D6A2782B28FEB8BC00818B91 /* MainPresenter.swift in Sources */,
 				D6A2782128FEB76400818B91 /* MainView.swift in Sources */,
 				D695167128FEB4990085E519 /* AppDelegate.swift in Sources */,
 				D695167328FEB4990085E519 /* SceneDelegate.swift in Sources */,
+				D6A2783728FEC34F00818B91 /* ModalViewController.swift in Sources */,
+				D6A2783528FEC32C00818B91 /* ModalView.swift in Sources */,
+				D6365FBC28FF021300DDB045 /* Model.swift in Sources */,
 				D6A2782928FEB88200818B91 /* MainViewController.swift in Sources */,
 				D6A2783028FEBB2A00818B91 /* Extension.swift in Sources */,
 			);
@@ -355,6 +391,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -383,6 +420,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

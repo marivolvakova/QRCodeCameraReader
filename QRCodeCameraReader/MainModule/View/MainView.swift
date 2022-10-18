@@ -23,7 +23,7 @@ class MainView: UIView {
         let messageLabel = UILabel()
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.textColor = .black
-        messageLabel.font = .systemFont(ofSize: 10, weight: .semibold)
+        messageLabel.font = .systemFont(ofSize: 40, weight: .semibold)
         messageLabel.backgroundColor = .white
         messageLabel.text = "QR CODE SCAN"
         messageLabel.numberOfLines = 0
@@ -45,7 +45,7 @@ class MainView: UIView {
     lazy var scanButton: UIButton = {
         let scanButton = UIButton(type: .system)
         scanButton.translatesAutoresizingMaskIntoConstraints = false
-        scanButton.setTitle("Pusg to start", for: .normal)
+        scanButton.setTitle("Push to start", for: .normal)
         scanButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
         scanButton.backgroundColor = .blue
         scanButton.tintColor = .white
