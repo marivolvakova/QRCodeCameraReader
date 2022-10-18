@@ -13,6 +13,12 @@
 		D695167828FEB4990085E519 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D695167628FEB4990085E519 /* Main.storyboard */; };
 		D695167A28FEB49B0085E519 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D695167928FEB49B0085E519 /* Assets.xcassets */; };
 		D695167D28FEB49B0085E519 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D695167B28FEB49B0085E519 /* LaunchScreen.storyboard */; };
+		D6A2782128FEB76400818B91 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2782028FEB76400818B91 /* MainView.swift */; };
+		D6A2782428FEB7B700818B91 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D6A2782328FEB7B700818B91 /* SnapKit */; };
+		D6A2782928FEB88200818B91 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2782828FEB88200818B91 /* MainViewController.swift */; };
+		D6A2782B28FEB8BC00818B91 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2782A28FEB8BC00818B91 /* MainPresenter.swift */; };
+		D6A2782E28FEB92000818B91 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2782D28FEB92000818B91 /* CameraManager.swift */; };
+		D6A2783028FEBB2A00818B91 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2782F28FEBB2A00818B91 /* Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +30,11 @@
 		D695167928FEB49B0085E519 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D695167C28FEB49B0085E519 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D695167E28FEB49B0085E519 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D6A2782028FEB76400818B91 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		D6A2782828FEB88200818B91 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		D6A2782A28FEB8BC00818B91 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		D6A2782D28FEB92000818B91 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		D6A2782F28FEBB2A00818B91 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6A2782428FEB7B700818B91 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +68,8 @@
 		D695166F28FEB4990085E519 /* QRCodeCameraReader */ = {
 			isa = PBXGroup;
 			children = (
+				D6A2782C28FEB8E300818B91 /* Services */,
+				D6A2782528FEB7DE00818B91 /* MainModule */,
 				D695167028FEB4990085E519 /* AppDelegate.swift */,
 				D695167228FEB4990085E519 /* SceneDelegate.swift */,
 				D695167428FEB4990085E519 /* ViewController.swift */,
@@ -65,6 +79,41 @@
 				D695167E28FEB49B0085E519 /* Info.plist */,
 			);
 			path = QRCodeCameraReader;
+			sourceTree = "<group>";
+		};
+		D6A2782528FEB7DE00818B91 /* MainModule */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2782728FEB80300818B91 /* Presenter */,
+				D6A2782628FEB7FB00818B91 /* View */,
+				D6A2782F28FEBB2A00818B91 /* Extension.swift */,
+			);
+			path = MainModule;
+			sourceTree = "<group>";
+		};
+		D6A2782628FEB7FB00818B91 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2782028FEB76400818B91 /* MainView.swift */,
+				D6A2782828FEB88200818B91 /* MainViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D6A2782728FEB80300818B91 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2782A28FEB8BC00818B91 /* MainPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		D6A2782C28FEB8E300818B91 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2782D28FEB92000818B91 /* CameraManager.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +132,9 @@
 			dependencies = (
 			);
 			name = QRCodeCameraReader;
+			packageProductDependencies = (
+				D6A2782328FEB7B700818B91 /* SnapKit */,
+			);
 			productName = QRCodeCameraReader;
 			productReference = D695166D28FEB4990085E519 /* QRCodeCameraReader.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +163,9 @@
 				Base,
 			);
 			mainGroup = D695166428FEB4990085E519;
+			packageReferences = (
+				D6A2782228FEB7B700818B91 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = D695166E28FEB4990085E519 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -139,8 +194,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D695167528FEB4990085E519 /* ViewController.swift in Sources */,
+				D6A2782E28FEB92000818B91 /* CameraManager.swift in Sources */,
+				D6A2782B28FEB8BC00818B91 /* MainPresenter.swift in Sources */,
+				D6A2782128FEB76400818B91 /* MainView.swift in Sources */,
 				D695167128FEB4990085E519 /* AppDelegate.swift in Sources */,
 				D695167328FEB4990085E519 /* SceneDelegate.swift in Sources */,
+				D6A2782928FEB88200818B91 /* MainViewController.swift in Sources */,
+				D6A2783028FEBB2A00818B91 /* Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,6 +418,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D6A2782228FEB7B700818B91 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D6A2782328FEB7B700818B91 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D6A2782228FEB7B700818B91 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D695166528FEB4990085E519 /* Project object */;
 }
