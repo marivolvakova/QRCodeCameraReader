@@ -16,32 +16,23 @@ protocol MainPresenterProtocol: AnyObject {
     //func getLink(object: String)
 }
 
-class MainPresenter: MainPresenterProtocol {
-    weak var view: MainViewProtocol?
-    var link: String
-
-    required init(view: MainViewProtocol, link: String) {
+class MainPresenter {
+    
+    weak var view: MainViewController?
+    let manager: DataManager
+    
+    required init(view: MainViewController, manager: DataManager) {
         self.view = view
-        self.link = link
+        self.manager = manager
     }
     
-//    func getLink(object: String) {
-//        self.link = object
-//    }
+
+    func showModalView(with link: String) {
+        let modal = ModalViewController()
+        self.view?.present(modal, animated: true)
+    }
+    
+    func makeRequest(with link: String) {
+        manager.makeRequest(link: link)
+    }
 }
-
-
-
-//func getInput() {
-//    cameraManager.getInput { result in
-//        DispatchQueue.main.async {
-//            switch result {
-//            case .success(let input):
-//                self.input = input
-//                self.view?.success()
-//            case .failure(let error):
-//                self.view?.showAlert(message: "\(e)")
-//                self.view?.failure(error: error)
-//            }
-//        }
-//    }
