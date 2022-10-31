@@ -12,27 +12,25 @@ protocol MainViewProtocol: AnyObject {
 }
 
 protocol MainPresenterProtocol: AnyObject {
-    init(view: MainViewProtocol, link: String)
-    //func getLink(object: String)
+    init(view: MainViewProtocol, router: CameraRouterProtocol)
+    func startScan()
+    func showModalView(link: Model?)
 }
 
-class MainPresenter {
+class MainPresenter: MainPresenterProtocol {
+    weak var view: MainViewProtocol?
+    private var router: CameraRouterProtocol?
     
-    weak var view: MainViewController?
-    let manager: DataManager
-    
-    required init(view: MainViewController, manager: DataManager) {
+    required init(view: MainViewProtocol, router: CameraRouterProtocol) {
         self.view = view
-        self.manager = manager
+        self.router = router
     }
     
+    func startScan() {
+        view?.buttonTapped()
+    }
 
-    func showModalView(with link: String) {
-        let modal = ModalViewController()
-        self.view?.present(modal, animated: true)
-    }
-    
-    func makeRequest(with link: String) {
-        manager.makeRequest(link: link)
+    func showModalView(link: Model?) {
+        router?.showModalViewController(link: link)
     }
 }

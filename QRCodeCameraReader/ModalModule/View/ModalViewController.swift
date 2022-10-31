@@ -11,73 +11,107 @@ import SnapKit
 
 class ModalViewController: UIViewController, WKUIDelegate {
     
-    var link = "https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf"
+    var webView = WKWebView()
+    var link: Model?
+    let manager = DataManager()
     
-    private var modalView: ModalView? {
-        guard isViewLoaded else { return nil }
-        return view as? ModalView
-    }
+    var presenter: ModalPresenter?
     
-    override func loadView() {
-        view = ModalView()
-    }
+    lazy var shareButton: UIButton = {
+        let shareButton = UIButton(type: .system)
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
+        shareButton.addTarget(self, action: #selector(shareAction), for: .touchUpInside)
+        shareButton.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
+        shareButton.tintColor = .black
+        return shareButton
+    }()
     
+    lazy var closeButton: UIButton = {
+        let closeButton = UIButton(type: .system)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+        closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        closeButton.tintColor = .black
+        return closeButton
+    }()
+    
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.color = UIColor.black
+        activityIndicator.hidesWhenStopped = true
+        return activityIndicator
+    }()
+    
+    lazy var topView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupHierarchy()
+        setupLayout()
         setupView()
     }
     
     private func setupView() {
-        modalView?.shareButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
-        modalView?.closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+        view.backgroundColor = .white
+        webView.tintColor = .black
+        activityIndicator.startAnimating()
+        webView.load(manager.requestToLoad!)
+        activityIndicator.stopAnimating()
     }
     
-    func loadWebView() {
-        if let url = URL(string: link) {
-            let myRequest = URLRequest(url: url)
-            modalView?.webView.load(myRequest)
-            print("Sucsess")
-            modalView?.activityIndicator.stopAnimating()
-        } else {
-            print("Incorrect link") }
+    private func setupHierarchy() {
+        view.addSubview(topView)
+        topView.addSubview(shareButton)
+        topView.addSubview(closeButton)
+        view.addSubview(webView)
+        view.addSubview(activityIndicator)
     }
     
-    @objc func saveAction() {
-        saveFile()
+    private func setupLayout() {
+        topView.snp.makeConstraints { make in
+            make.top.equalTo(view.snp.top)
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.height.equalTo(50)
+        }
+        webView.snp.makeConstraints { make in
+            make.top.equalTo(topView.snp.bottom)
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.bottom.equalTo(view.snp.bottom)
+        }
+        
+        shareButton.snp.makeConstraints { make in
+            make.centerY.equalTo(topView.snp.centerY)
+            make.trailing.equalTo(view.snp.trailing).offset(-20)
+            make.size.equalTo(40)
+        }
+        
+        closeButton.snp.makeConstraints { make in
+            make.centerY.equalTo(topView.snp.centerY)
+            make.left.equalTo(view.snp.left).offset(20)
+            make.size.equalTo(40)
+        }
+        
+        activityIndicator.snp.makeConstraints { make in
+            make.center.equalTo(view.snp.center)
+            make.size.equalTo(100)
+        }
+    }
+}
+
+
+extension ModalViewController: ModalViewProtocol {
+    
+    @objc func shareAction() {
+        presenter?.saveFile()
     }
     
     @objc func closeView() {
         self.dismiss(animated: true)
     }
-    
-    func saveFile() {
-        let url = URL(string: self.link)
-        let pdfdata = try? Data.init(contentsOf: url!)
-        let resDocPath = (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!) as URL
-        let pdfFileName = "\(UUID().uuidString).pdf"
-        let filePath = resDocPath.appendingPathComponent(pdfFileName)
-        
-        do {
-            try pdfdata?.write(to: filePath, options: .atomic)
-            
-            let alert = UIAlertController(title: "Your file \(pdfFileName) saved!", message: "To check the file in the folder press GO", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Back", style: .default, handler: nil))
-            alert.addAction(UIAlertAction(title: "GO", style: .default, handler: {  [weak self] _ in
-                
-                let path = filePath.absoluteString.replacingOccurrences(of: "file://", with: "shareddocuments://")
-                let url = URL(string: path)!
-                UIApplication.shared.open(url)
-            } ))
-            self.present(alert, animated: true)
-            print("File saved")
-        } catch {
-            let alert = UIAlertController(title: "Your file did not saved!", message: "", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            
-            self.present(alert, animated: true)
-            print("Some error")
-        }
-    }
 }
-
