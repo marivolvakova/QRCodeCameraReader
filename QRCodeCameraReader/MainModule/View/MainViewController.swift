@@ -59,11 +59,6 @@ class MainViewController: UIViewController {
         return scanButton
     }()
     
-    @objc func buttonTapped() {
-        view.layer.addSublayer(videoPreviewLayer)
-        captureSession.startRunning()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupHierarchy()
@@ -91,6 +86,8 @@ class MainViewController: UIViewController {
         videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         videoPreviewLayer.frame = view.layer.bounds
     }
+    
+
     
     // MARK: - Setup functions
     
@@ -134,12 +131,19 @@ extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
                     qrCodeFrameView.frame = barCodeObject!.bounds
                     view.bringSubviewToFront(qrCodeFrameView)
                     messageLabel.text = "\(String(describing: object.stringValue ?? ""))"
-                    presenter?.showModalView(with: object.stringValue ?? "")
+                    presenter?.showModalView(link: Model(link: object.stringValue ?? ""))
                 }
             }
         default:
             qrCodeFrameView.frame = CGRect.zero
             messageLabel.text = "No QR code is detected"
         }
+    }
+}
+
+extension MainViewController: MainViewProtocol {
+    @objc func buttonTapped() {
+        view.layer.addSublayer(videoPreviewLayer)
+        captureSession.startRunning()
     }
 }

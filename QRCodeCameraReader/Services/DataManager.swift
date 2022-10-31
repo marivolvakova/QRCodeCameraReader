@@ -8,23 +8,34 @@ import Foundation
 import UIKit
 
 
-class DataManager {
-    
+protocol DataManagerProtocol: AnyObject {
+    var alertToShow: UIAlertController? { get }
+    var requestToLoad: URLRequest? { get }
+    func makeRequest(link: Model) -> URLRequest
+    func saveFile(link: Model)
+}
+
+class DataManager: DataManagerProtocol {
     var requestToLoad: URLRequest?
+    var alertToShow: UIAlertController?
     
-    func makeRequest(link: String) {
-        if let url = URL(string: link) {
+    static let sharedManager = DataManager()
+
+    func makeRequest(link: Model) -> URLRequest {
+        
+        if let url = URL(string: link.link) {
             let request = URLRequest(url: url)
             requestToLoad = request
             print("Sucsess")
         } else {
             print("Incorrect link")
         }
+        return requestToLoad!
     }
     
-    func saveFile(link: String) {
+    func saveFile(link: Model) {
         
-        guard let url = URL(string: link) else { return }
+        guard let url = URL(string: link.link) else { return }
         let pdfdata = try? Data.init(contentsOf: url)
         
         if let documentPath = FileManager.default.urls(for: .documentDirectory,
@@ -35,30 +46,29 @@ class DataManager {
             do {
                 try pdfdata?.write(to: filePath, options: .atomic)
                 
-                let alert = UIAlertController(title: "Your file saved!",
+                alertToShow = UIAlertController(title: "Your file saved!",
                                               message: "",
                                               preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Back",
+                alertToShow?.addAction(UIAlertAction(title: "Back",
                                               style: .default,
                                               handler: nil))
-                alert.addAction(UIAlertAction(title: "Open file",
+                alertToShow?.addAction(UIAlertAction(title: "Open file",
                                               style: .default,
                                               handler: {_ in
                     let path = filePath.absoluteString.replacingOccurrences(of: "file://", with: "shareddocuments://")
                     guard let url = URL(string: path) else { return }
                     UIApplication.shared.open(url)
+                    
                 }))
-                //self.present(alert, animated: true)
                 print("File saved")
                 
             } catch {
-                let alert = UIAlertController(title: "Your file has not saved!",
+                alertToShow = UIAlertController(title: "Your file has not saved!",
                                               message: "",
                                               preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK",
+                alertToShow?.addAction(UIAlertAction(title: "OK",
                                               style: .default,
                                               handler: nil))
-                //self.present(alert, animated: true)
                 print("Error")
             }
         }
