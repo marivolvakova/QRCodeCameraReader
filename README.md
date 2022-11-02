@@ -9,7 +9,7 @@
 2. Открытие WebView автоматическое, то есть без предварительного запроса у пользователя согласие на переход
 3. В WebView индикатор загрузки страницы
 
-[Тестовое_задание.pdf](https://github.com/marivolvakova/QRCodeCameraReader/files/9924331/_.pdf)
+<img width="730" alt="Снимок экрана 2022-11-03 в 00 47 27" src="https://user-images.githubusercontent.com/104025325/199608878-e7beb76d-c43a-479d-ab90-2b486b002a36.png">
 
 
 ![IMG_9010](https://user-images.githubusercontent.com/104025325/199608593-cb5c6096-5b77-461a-8795-c62274708338.PNG)
