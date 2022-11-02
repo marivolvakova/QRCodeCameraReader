@@ -4,39 +4,59 @@
 //
 //  Created by Мария Вольвакова on 31.10.2022.
 //
-import Foundation
+import UIKit
 
 protocol ModalViewProtocol: AnyObject {
-    func shareAction()
+    func saveAction()
     func closeView()
+    func showSavedAlert(urlFilePath: URL)
+    func showNotSavedAlert()
 }
 
 protocol ModalPresenterProtocol: AnyObject {
-    init(view: ModalViewProtocol, manager: DataManagerProtocol, router: CameraRouterProtocol, link: Model?)
-    func showWebView()
+    init(view: ModalViewProtocol, manager: DataManagerProtocol, router: CameraRouterProtocol, link: String?)
+    func showWebView() -> URLRequest?
     func saveFile()
 }
 
 class ModalPresenter: ModalPresenterProtocol {
-    var link: Model?
+    var link: String?
     weak var view: ModalViewProtocol?
     private let manager: DataManagerProtocol
     private let router: CameraRouterProtocol?
     
-    required init(view: ModalViewProtocol, manager: DataManagerProtocol, router: CameraRouterProtocol, link: Model?) {
+    required init(view: ModalViewProtocol, manager: DataManagerProtocol, router: CameraRouterProtocol, link: String?) {
         self.view = view
         self.manager = manager
         self.link = link
         self.router = router
     }
     
-    func showWebView() {
-        manager.makeRequest(link: link!)
-        
+    func showWebView() -> URLRequest? {
+        var resultRequest: URLRequest?
+        if let link = link {
+                self.manager.makeRequest(link: link, completion: { [weak self] result in
+                    guard self != nil else { return }
+                    if result == result {
+                        resultRequest = result
+                    } else {
+                        print("Incorrect link")
+                    }
+                })
+        }
+        return resultRequest
     }
     
     func saveFile() {
-        manager.saveFile(link: link!)
-        router?.showAlert(alert: manager.alertToShow!)
+        if let link = link {
+            manager.saveFile(link: link) { [weak self] urlPath in
+                guard self != nil else { return }
+                if urlPath == urlPath {
+                    self?.view?.showSavedAlert(urlFilePath: urlPath)
+                } else {
+                    self?.view?.showNotSavedAlert()
+                }
+            }
+        }
     }
 }

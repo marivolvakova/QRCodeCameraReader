@@ -11,38 +11,36 @@ import SnapKit
 
 class ModalViewController: UIViewController, WKUIDelegate {
     
-    var webView = WKWebView()
-    var link: Model?
-    let manager = DataManager()
+    private var webView = WKWebView()
+    private var link: String?
+    private let manager = DataManagerImpl()
     
     var presenter: ModalPresenter?
     
-    lazy var shareButton: UIButton = {
-        let shareButton = UIButton(type: .system)
-        shareButton.translatesAutoresizingMaskIntoConstraints = false
-        shareButton.addTarget(self, action: #selector(shareAction), for: .touchUpInside)
-        shareButton.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
-        shareButton.tintColor = .black
-        return shareButton
+    private var saveButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
+        button.tintColor = .black
+        return button
     }()
     
-    lazy var closeButton: UIButton = {
-        let closeButton = UIButton(type: .system)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-        closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-        closeButton.tintColor = .black
-        return closeButton
+    private var closeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.tintColor = .black
+        return button
     }()
     
-    lazy var activityIndicator: UIActivityIndicatorView = {
+    private var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.color = UIColor.black
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
     }()
     
-    lazy var topView: UIView = {
+    private var topView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         return view
@@ -58,14 +56,17 @@ class ModalViewController: UIViewController, WKUIDelegate {
     private func setupView() {
         view.backgroundColor = .white
         webView.tintColor = .black
+        saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         activityIndicator.startAnimating()
-        webView.load(manager.requestToLoad!)
+        guard let request = presenter?.showWebView() else { return }
+        webView.load(request)
         activityIndicator.stopAnimating()
     }
     
     private func setupHierarchy() {
         view.addSubview(topView)
-        topView.addSubview(shareButton)
+        topView.addSubview(saveButton)
         topView.addSubview(closeButton)
         view.addSubview(webView)
         view.addSubview(activityIndicator)
@@ -84,19 +85,16 @@ class ModalViewController: UIViewController, WKUIDelegate {
             make.trailing.equalTo(view.snp.trailing)
             make.bottom.equalTo(view.snp.bottom)
         }
-        
-        shareButton.snp.makeConstraints { make in
+        saveButton.snp.makeConstraints { make in
             make.centerY.equalTo(topView.snp.centerY)
             make.trailing.equalTo(view.snp.trailing).offset(-20)
             make.size.equalTo(40)
         }
-        
         closeButton.snp.makeConstraints { make in
             make.centerY.equalTo(topView.snp.centerY)
             make.left.equalTo(view.snp.left).offset(20)
             make.size.equalTo(40)
         }
-        
         activityIndicator.snp.makeConstraints { make in
             make.center.equalTo(view.snp.center)
             make.size.equalTo(100)
@@ -104,14 +102,40 @@ class ModalViewController: UIViewController, WKUIDelegate {
     }
 }
 
-
 extension ModalViewController: ModalViewProtocol {
-    
-    @objc func shareAction() {
+    @objc func saveAction() {
         presenter?.saveFile()
     }
     
     @objc func closeView() {
         self.dismiss(animated: true)
+    }
+    
+    func showSavedAlert(urlFilePath: URL) {
+        let alert = UIAlertController(title: "Your file saved!",
+                                       message: "",
+                                       preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Back",
+                                           style: .default,
+                                           handler: nil))
+        alert.addAction(UIAlertAction(title: "Open file",
+                                           style: .default,
+                                           handler: {_ in
+            let path = urlFilePath.absoluteString.replacingOccurrences(of: "file://", with: "shareddocuments://")
+            guard let url = URL(string: path) else { return }
+            
+            UIApplication.shared.open(url)
+        }))
+        self.present(alert, animated: true)
+    }
+
+    func showNotSavedAlert() {
+        let alert = UIAlertController(title: "Your file has not been saved!",
+                                           message: "",
+                                           preferredStyle: .alert)
+             alert.addAction(UIAlertAction(title: "OK",
+                                           style: .default,
+                                           handler: nil))
+        self.present(alert, animated: true)
     }
 }

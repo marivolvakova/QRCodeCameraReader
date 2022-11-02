@@ -13,7 +13,7 @@ import UIKit
 
 protocol ModuleAssemblyProtocol {
     func createMainModule(router: CameraRouterProtocol) -> UIViewController
-    func createModalModule(router: CameraRouterProtocol, link: Model?) -> UIViewController
+    func createModalModule(router: CameraRouterProtocol, link: String?) -> UIViewController
 }
 
 //MARK: - AssemblyModule
@@ -26,9 +26,9 @@ class AssemblyModule: ModuleAssemblyProtocol {
         return view
     }
     
-    func createModalModule(router: CameraRouterProtocol, link: Model?) -> UIViewController {
+    func createModalModule(router: CameraRouterProtocol, link: String?) -> UIViewController {
         let view = ModalViewController()
-        let presenter = ModalPresenter(view: view, manager: DataManager.sharedManager, router: router, link: link)
+        let presenter = ModalPresenter(view: view, manager: DataManagerImpl(), router: router, link: link)
         view.presenter = presenter
         return view
     }

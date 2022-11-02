@@ -14,49 +14,48 @@ class MainViewController: UIViewController {
     
     var presenter: MainPresenter?
     
-    var captureSession = AVCaptureSession()
-    var videoPreviewLayer = AVCaptureVideoPreviewLayer()
+    private var captureSession = AVCaptureSession()
+    private var videoPreviewLayer = AVCaptureVideoPreviewLayer()
     
-    lazy var qrCodeFrameView: UIView = {
-        let qrCodeFrameView = UIView()
-        qrCodeFrameView.layer.borderColor = UIColor.green.cgColor
-        qrCodeFrameView.layer.borderWidth = 6
-        return qrCodeFrameView
+    private var qrCodeFrameView: UIView = {
+        let view = UIView()
+        view.layer.borderColor = UIColor.green.cgColor
+        view.layer.borderWidth = 6
+        return view
     }()
     
-    lazy var codeLabel: UILabel = {
-        let messageLabel = UILabel()
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
-        messageLabel.textColor = .black
-        messageLabel.font = .systemFont(ofSize: 35, weight: .semibold)
-        messageLabel.backgroundColor = .white
-        messageLabel.text = "QR CODE SCAN"
-        messageLabel.numberOfLines = 0
-        return messageLabel
+    private var codeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 35, weight: .semibold)
+        label.backgroundColor = .white
+        label.text = "QR CODE SCAN"
+        label.numberOfLines = 0
+        return label
     }()
     
-    lazy var messageLabel: UILabel = {
-        let messageLabel = UILabel()
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
-        messageLabel.textColor = .black
-        messageLabel.font = .systemFont(ofSize: 10, weight: .semibold)
-        messageLabel.backgroundColor = .white
-        messageLabel.text = "Direct the camera at the QR code"
-        messageLabel.numberOfLines = 0
-        return messageLabel
+    private var messageLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 10, weight: .semibold)
+        label.backgroundColor = .white
+        label.text = "Direct the camera at the QR code"
+        label.numberOfLines = 0
+        return label
     }()
     
-    lazy var scanButton: UIButton = {
-        let scanButton = UIButton(type: .system)
-        scanButton.translatesAutoresizingMaskIntoConstraints = false
-        scanButton.setTitle("Push to start", for: .normal)
-        scanButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
-        scanButton.backgroundColor = .blue
-        scanButton.tintColor = .white
-        scanButton.layer.masksToBounds = true
-        scanButton.layer.cornerRadius = 10
-        scanButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        return scanButton
+    private var scanButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Push to start", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
+        button.backgroundColor = .blue
+        button.tintColor = .white
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 10
+        return button
     }()
     
     override func viewDidLoad() {
@@ -87,23 +86,23 @@ class MainViewController: UIViewController {
         videoPreviewLayer.frame = view.layer.bounds
     }
     
-
-    
     // MARK: - Setup functions
     
-    func setupView() {
+    private func setupView() {
         view.backgroundColor = .white
         videoPreviewLayer.frame = view.layer.bounds
+        
+        scanButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
-    func setupHierarchy() {
+    private func setupHierarchy() {
         view.addSubview(messageLabel)
         view.addSubview(scanButton)
         view.addSubview(codeLabel)
         view.addSubview(qrCodeFrameView)
     }
     
-    func setupLayout() {
+    private func setupLayout() {
         codeLabel.snp.makeConstraints { make in
             make.centerX.equalTo(view.snp.centerX)
             make.top.equalTo(view.snp.top).offset(150)
@@ -121,17 +120,18 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
-    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+    internal func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         
         switch metadataObjects.count {
         case 1...:
             if let object = metadataObjects.first as? AVMetadataMachineReadableCodeObject {
                 if object.type == AVMetadataObject.ObjectType.qr  {
-                    let barCodeObject = videoPreviewLayer.transformedMetadataObject(for: object)
-                    qrCodeFrameView.frame = barCodeObject!.bounds
+                    guard let barCodeObject = videoPreviewLayer.transformedMetadataObject(for: object) else { return }
+                    qrCodeFrameView.frame = barCodeObject.bounds
                     view.bringSubviewToFront(qrCodeFrameView)
-                    messageLabel.text = "\(String(describing: object.stringValue ?? ""))"
-                    presenter?.showModalView(link: Model(link: object.stringValue ?? ""))
+                    guard let stringObject = object.stringValue else { return }
+                    messageLabel.text = "\(stringObject)"
+                    presenter?.showModalView(link: stringObject)
                 }
             }
         default:
@@ -147,3 +147,5 @@ extension MainViewController: MainViewProtocol {
         captureSession.startRunning()
     }
 }
+
+

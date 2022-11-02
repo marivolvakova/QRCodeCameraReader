@@ -14,7 +14,7 @@ protocol MainViewProtocol: AnyObject {
 protocol MainPresenterProtocol: AnyObject {
     init(view: MainViewProtocol, router: CameraRouterProtocol)
     func startScan()
-    func showModalView(link: Model?)
+    func showModalView(link: String?)
 }
 
 class MainPresenter: MainPresenterProtocol {
@@ -30,7 +30,7 @@ class MainPresenter: MainPresenterProtocol {
         view?.buttonTapped()
     }
 
-    func showModalView(link: Model?) {
+    func showModalView(link: String?) {
         router?.showModalViewController(link: link)
     }
 }

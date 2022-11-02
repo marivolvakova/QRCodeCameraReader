@@ -18,8 +18,7 @@ protocol RouterProtocol {
 
 protocol CameraRouterProtocol: RouterProtocol {
     func initializeViewControllers()
-    func showModalViewController(link: Model?)
-    func showAlert(alert: UIAlertController)
+    func showModalViewController(link: String?)
 }
 
 // MARK: - Router
@@ -40,18 +39,11 @@ class Router: CameraRouterProtocol {
         }
     }
 
-    func showModalViewController(link: Model?) {
+    func showModalViewController(link: String?) {
         if let navigationController = navigationController {
             guard let modalViewController =
                     assemblyModule?.createModalModule(router: self, link: link) else { return }
             navigationController.present(modalViewController, animated: true)
-        }
-    }
-
-    func showAlert(alert: UIAlertController) {
-        if let navigationController = navigationController {
-            let modalViewController = ModalViewController()
-            modalViewController.present(alert, animated: true)
         }
     }
 }

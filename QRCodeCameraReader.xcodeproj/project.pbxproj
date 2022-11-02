@@ -10,7 +10,6 @@
 		D651E51C291009C900C14438 /* ModalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651E51B291009C900C14438 /* ModalPresenter.swift */; };
 		D651E51E29100E8900C14438 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651E51D29100E8900C14438 /* Router.swift */; };
 		D651E52029100EB700C14438 /* Assambly.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651E51F29100EB700C14438 /* Assambly.swift */; };
-		D651E522291018EA00C14438 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651E521291018EA00C14438 /* Model.swift */; };
 		D695167128FEB4990085E519 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D695167028FEB4990085E519 /* AppDelegate.swift */; };
 		D695167328FEB4990085E519 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D695167228FEB4990085E519 /* SceneDelegate.swift */; };
 		D695167828FEB4990085E519 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D695167628FEB4990085E519 /* Main.storyboard */; };
@@ -27,7 +26,6 @@
 		D651E51B291009C900C14438 /* ModalPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresenter.swift; sourceTree = "<group>"; };
 		D651E51D29100E8900C14438 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		D651E51F29100EB700C14438 /* Assambly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assambly.swift; sourceTree = "<group>"; };
-		D651E521291018EA00C14438 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		D695166D28FEB4990085E519 /* QRCodeCameraReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QRCodeCameraReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D695167028FEB4990085E519 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D695167228FEB4990085E519 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,7 +68,6 @@
 				D651E528291038CD00C14438 /* App */,
 				D651E5252910388000C14438 /* Router */,
 				D651E526291038A500C14438 /* Assambly */,
-				D651E527291038B900C14438 /* Model */,
 				D6A2782528FEB7DE00818B91 /* MainModule */,
 				D6A2783128FEC30800818B91 /* ModalModule */,
 			);
@@ -91,14 +88,6 @@
 				D651E51F29100EB700C14438 /* Assambly.swift */,
 			);
 			path = Assambly;
-			sourceTree = "<group>";
-		};
-		D651E527291038B900C14438 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				D651E521291018EA00C14438 /* Model.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		D651E528291038CD00C14438 /* App */ = {
@@ -279,7 +268,6 @@
 				D695167328FEB4990085E519 /* SceneDelegate.swift in Sources */,
 				D651E52029100EB700C14438 /* Assambly.swift in Sources */,
 				D6A2783728FEC34F00818B91 /* ModalViewController.swift in Sources */,
-				D651E522291018EA00C14438 /* Model.swift in Sources */,
 				D6A2782928FEB88200818B91 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
