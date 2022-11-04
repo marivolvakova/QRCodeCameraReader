@@ -6,12 +6,17 @@
 //
 import UIKit
 
+// MARK: - ModalViewProtocol
+
 protocol ModalViewProtocol: AnyObject {
+    func startActivityIndicator()
+    func stopActivityIndicator()
     func saveAction()
     func closeView()
     func showSavedAlert(urlFilePath: URL)
     func showNotSavedAlert()
 }
+// MARK: - ModalPresenterProtocol
 
 protocol ModalPresenterProtocol: AnyObject {
     init(view: ModalViewProtocol, manager: DataManagerProtocol, router: CameraRouterProtocol, link: String?)
@@ -19,11 +24,18 @@ protocol ModalPresenterProtocol: AnyObject {
     func saveFile()
 }
 
+// MARK: - ModalPresenter
+
 class ModalPresenter: ModalPresenterProtocol {
+    
+    // MARK: - Properties
+    
     var link: String?
     weak var view: ModalViewProtocol?
     private let manager: DataManagerProtocol
     private let router: CameraRouterProtocol?
+    
+    // MARK: - Initialize
     
     required init(view: ModalViewProtocol, manager: DataManagerProtocol, router: CameraRouterProtocol, link: String?) {
         self.view = view
@@ -32,13 +44,18 @@ class ModalPresenter: ModalPresenterProtocol {
         self.router = router
     }
     
+    // MARK: - Functions
+    
     func showWebView() -> URLRequest? {
         var resultRequest: URLRequest?
         if let link = link {
-                self.manager.makeRequest(link: link, completion: { [weak self] result in
+            self.view?.startActivityIndicator()
+                self.manager.makeRequest(link: link,
+                                         completion: { [weak self] result in
                     guard self != nil else { return }
                     if result == result {
                         resultRequest = result
+                        self?.view?.stopActivityIndicator()
                     } else {
                         print("Incorrect link")
                     }

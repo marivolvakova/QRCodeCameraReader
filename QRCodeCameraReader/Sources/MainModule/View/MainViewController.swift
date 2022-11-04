@@ -12,7 +12,9 @@ import AVFoundation
 
 class MainViewController: UIViewController {
     
-    var presenter: MainPresenter?
+    // MARK: - Properties
+    
+    weak var presenter: MainPresenter?
     
     private var captureSession = AVCaptureSession()
     private var videoPreviewLayer = AVCaptureVideoPreviewLayer()
@@ -26,7 +28,6 @@ class MainViewController: UIViewController {
     
     private var codeLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
         label.font = .systemFont(ofSize: 35, weight: .semibold)
         label.backgroundColor = .white
@@ -37,7 +38,6 @@ class MainViewController: UIViewController {
     
     private var messageLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
         label.font = .systemFont(ofSize: 10, weight: .semibold)
         label.backgroundColor = .white
@@ -48,7 +48,6 @@ class MainViewController: UIViewController {
     
     private var scanButton: UIButton = {
         let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Push to start", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
         button.backgroundColor = .blue
@@ -58,6 +57,8 @@ class MainViewController: UIViewController {
         return button
     }()
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupHierarchy()
@@ -66,32 +67,11 @@ class MainViewController: UIViewController {
         scannerSettings()
     }
     
-    func scannerSettings() {
-        guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
-            fatalError("No video device found") }
-        do {
-            let input = try AVCaptureDeviceInput(device: captureDevice)
-            captureSession.addInput(input)
-        } catch {
-            print(error)
-            return
-        }
-        
-        let output = AVCaptureMetadataOutput()
-        captureSession.addOutput(output)
-        output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-        output.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
-        
-        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        videoPreviewLayer.frame = view.layer.bounds
-    }
-    
     // MARK: - Setup functions
     
     private func setupView() {
         view.backgroundColor = .white
         videoPreviewLayer.frame = view.layer.bounds
-        
         scanButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
@@ -117,7 +97,29 @@ class MainViewController: UIViewController {
             make.centerX.equalTo(view.snp.centerX)
         }
     }
+    
+    func scannerSettings() {
+        guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
+            fatalError("No video device found") }
+        do {
+            let input = try AVCaptureDeviceInput(device: captureDevice)
+            captureSession.addInput(input)
+        } catch {
+            print(error)
+            return
+        }
+        
+        let output = AVCaptureMetadataOutput()
+        captureSession.addOutput(output)
+        output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+        output.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
+        
+        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        videoPreviewLayer.frame = view.layer.bounds
+    }
 }
+
+// MARK: - AVCaptureMetadataOutputObjectsDelegate
 
 extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
     internal func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -140,6 +142,8 @@ extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
         }
     }
 }
+
+// MARK: - MainViewProtocol Impl
 
 extension MainViewController: MainViewProtocol {
     @objc func buttonTapped() {

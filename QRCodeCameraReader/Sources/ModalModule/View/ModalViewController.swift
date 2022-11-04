@@ -11,6 +11,8 @@ import SnapKit
 
 class ModalViewController: UIViewController, WKUIDelegate {
     
+    // MARK: - Properties
+    
     private var webView = WKWebView()
     private var link: String?
     private let manager = DataManagerImpl()
@@ -19,7 +21,6 @@ class ModalViewController: UIViewController, WKUIDelegate {
     
     private var saveButton: UIButton = {
         let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
         button.tintColor = .black
         return button
@@ -27,7 +28,6 @@ class ModalViewController: UIViewController, WKUIDelegate {
     
     private var closeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.tintColor = .black
         return button
@@ -46,6 +46,8 @@ class ModalViewController: UIViewController, WKUIDelegate {
         return view
     }()
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupHierarchy()
@@ -53,15 +55,17 @@ class ModalViewController: UIViewController, WKUIDelegate {
         setupView()
     }
     
+    // MARK: - Setup functions
+    
     private func setupView() {
         view.backgroundColor = .white
         webView.tintColor = .black
+        
         saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-        activityIndicator.startAnimating()
+        
         guard let request = presenter?.showWebView() else { return }
         webView.load(request)
-        activityIndicator.stopAnimating()
     }
     
     private func setupHierarchy() {
@@ -102,7 +106,17 @@ class ModalViewController: UIViewController, WKUIDelegate {
     }
 }
 
+// MARK: - ModalViewProtocol Impl
+
 extension ModalViewController: ModalViewProtocol {
+    func startActivityIndicator() {
+        activityIndicator.startAnimating()
+    }
+    
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating()
+    }
+    
     @objc func saveAction() {
         presenter?.saveFile()
     }

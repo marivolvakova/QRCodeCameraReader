@@ -731,8 +731,8 @@
             filePath = "QRCodeCameraReader/Services/DataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
             landmarkName = "saveFile(link:completion:)"
             landmarkType = "7">
          </BreakpointContent>
