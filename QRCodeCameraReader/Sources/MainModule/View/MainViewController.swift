@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     
     // MARK: - Properties
     
-    weak var presenter: MainPresenter?
+    var presenter: MainPresenter?
     
     private var captureSession = AVCaptureSession()
     private var videoPreviewLayer = AVCaptureVideoPreviewLayer()
@@ -133,14 +133,15 @@ extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
                     qrCodeFrameView.frame = barCodeObject.bounds
                     view.bringSubviewToFront(qrCodeFrameView)
                     guard let stringObject = object.stringValue else { return }
-                
-                    presenter?.showModalView(link: stringObject)
                     
+                    presenter?.updateLableText(link: stringObject)
+                    
+                    presenter?.showModalView(link: stringObject)
                 }
             }
         default:
             qrCodeFrameView.frame = CGRect.zero
-            messageLabel.text = "No QR code is detected"
+            presenter?.updateLableText(link: nil)
         }
     }
 }
@@ -149,10 +150,10 @@ extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
 
 extension MainViewController: MainViewProtocol {
     
-    func setLableText(link: String) {
+    func setupLabelText(link: String?) {
+        guard let link = link else { return print("No QR code is detected")}
         messageLabel.text = "\(link)"
     }
-    
     @objc func buttonTapped() {
         view.layer.addSublayer(videoPreviewLayer)
         captureSession.startRunning()

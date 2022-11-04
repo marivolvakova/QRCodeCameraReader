@@ -10,6 +10,7 @@ import Foundation
 // MARK: - MainViewProtocol
 
 protocol MainViewProtocol: AnyObject {
+    
     func buttonTapped()
 }
 
@@ -40,6 +41,10 @@ class MainPresenter: MainPresenterProtocol {
     
     func startScan() {
         view?.buttonTapped()
+    }
+    
+    func updateLableText(link: String?) {
+        
     }
     
     func showModalView(link: String?) {
