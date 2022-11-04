@@ -10,7 +10,7 @@ import Foundation
 // MARK: - MainViewProtocol
 
 protocol MainViewProtocol: AnyObject {
-    
+    func setupLabelText(link: String?)
     func buttonTapped()
 }
 
@@ -44,7 +44,7 @@ class MainPresenter: MainPresenterProtocol {
     }
     
     func updateLableText(link: String?) {
-        
+        view?.setupLabelText(link: link)
     }
     
     func showModalView(link: String?) {

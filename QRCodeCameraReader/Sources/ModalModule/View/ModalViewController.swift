@@ -13,34 +13,33 @@ class ModalViewController: UIViewController, WKUIDelegate {
     
     // MARK: - Properties
     
+    var presenter: ModalPresenter?
     private var webView = WKWebView()
     private var link: String?
     private let manager = DataManagerImpl()
     
-    var presenter: ModalPresenter?
-    
-    private var saveButton: UIButton = {
+    private let saveButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
         button.tintColor = .black
         return button
     }()
     
-    private var closeButton: UIButton = {
+    private let closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.tintColor = .black
         return button
     }()
     
-    private var activityIndicator: UIActivityIndicatorView = {
+    private let activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.color = UIColor.black
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
     }()
     
-    private var topView: UIView = {
+    private let topView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         return view
@@ -64,8 +63,10 @@ class ModalViewController: UIViewController, WKUIDelegate {
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         
+        activityIndicator.startAnimating()
         guard let request = presenter?.showWebView() else { return print("No request found")}
         webView.load(request)
+        activityIndicator.stopAnimating()
     }
     
     private func setupHierarchy() {
@@ -109,14 +110,6 @@ class ModalViewController: UIViewController, WKUIDelegate {
 // MARK: - ModalViewProtocol Impl
 
 extension ModalViewController: ModalViewProtocol {
-    func startActivityIndicator() {
-        activityIndicator.startAnimating()
-    }
-    
-    func stopActivityIndicator() {
-        activityIndicator.stopAnimating()
-    }
-    
     @objc func saveButtonTapped() {
         let alert = UIAlertController(title: "Do you want to save file?",
                                            message: "",

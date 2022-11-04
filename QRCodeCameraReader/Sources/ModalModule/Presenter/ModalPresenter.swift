@@ -9,8 +9,6 @@ import UIKit
 // MARK: - ModalViewProtocol
 
 protocol ModalViewProtocol: AnyObject {
-    func startActivityIndicator()
-    func stopActivityIndicator()
     func saveButtonTapped()
     func closeView()
     func showSavedAlert(urlFilePath: URL)
@@ -49,17 +47,15 @@ class ModalPresenter: ModalPresenterProtocol {
     func showWebView() -> URLRequest? {
         var resultRequest: URLRequest?
         if let link = link {
-            self.view?.startActivityIndicator()
-                self.manager.makeRequest(link: link,
-                                         completion: { [weak self] result in
-                    guard self != nil else { return }
-                    if result == result {
-                        resultRequest = result
-                        self?.view?.stopActivityIndicator()
-                    } else {
-                        print("Incorrect link")
-                    }
-                })
+            self.manager.makeRequest(link: link,
+                                     completion: { [weak self] result in
+                guard self != nil else { return }
+                if result == result {
+                    resultRequest = result
+                } else {
+                    print("Incorrect link")
+                }
+            })
         }
         return resultRequest
     }

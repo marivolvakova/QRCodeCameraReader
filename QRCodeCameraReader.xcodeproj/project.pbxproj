@@ -65,6 +65,7 @@
 		D651E5242910385F00C14438 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D6A2782C28FEB8E300818B91 /* Services */,
 				D651E528291038CD00C14438 /* App */,
 				D651E5252910388000C14438 /* Router */,
 				D651E526291038A500C14438 /* Assambly */,
@@ -119,7 +120,6 @@
 			isa = PBXGroup;
 			children = (
 				D651E5242910385F00C14438 /* Sources */,
-				D6A2782C28FEB8E300818B91 /* Services */,
 				D651E5232910385200C14438 /* Resourses */,
 			);
 			path = QRCodeCameraReader;

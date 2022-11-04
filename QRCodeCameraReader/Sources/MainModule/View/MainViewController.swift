@@ -135,7 +135,6 @@ extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
                     guard let stringObject = object.stringValue else { return }
                     
                     presenter?.updateLableText(link: stringObject)
-                    
                     presenter?.showModalView(link: stringObject)
                 }
             }
@@ -149,7 +148,6 @@ extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
 // MARK: - MainViewProtocol Impl
 
 extension MainViewController: MainViewProtocol {
-    
     func setupLabelText(link: String?) {
         guard let link = link else { return print("No QR code is detected")}
         messageLabel.text = "\(link)"
