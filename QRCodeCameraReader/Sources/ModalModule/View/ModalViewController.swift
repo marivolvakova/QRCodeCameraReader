@@ -11,40 +11,41 @@ import SnapKit
 
 class ModalViewController: UIViewController, WKUIDelegate {
     
+    // MARK: - Properties
+    
+    var presenter: ModalPresenter?
     private var webView = WKWebView()
     private var link: String?
     private let manager = DataManagerImpl()
     
-    var presenter: ModalPresenter?
-    
-    private var saveButton: UIButton = {
+    private let saveButton: UIButton = {
         let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
         button.tintColor = .black
         return button
     }()
     
-    private var closeButton: UIButton = {
+    private let closeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.tintColor = .black
         return button
     }()
     
-    private var activityIndicator: UIActivityIndicatorView = {
+    private let activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.color = UIColor.black
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
     }()
     
-    private var topView: UIView = {
+    private let topView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         return view
     }()
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,13 +54,17 @@ class ModalViewController: UIViewController, WKUIDelegate {
         setupView()
     }
     
+    // MARK: - Setup functions
+    
     private func setupView() {
         view.backgroundColor = .white
         webView.tintColor = .black
-        saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
+        
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+        
         activityIndicator.startAnimating()
-        guard let request = presenter?.showWebView() else { return }
+        guard let request = presenter?.showWebView() else { return print("No request found")}
         webView.load(request)
         activityIndicator.stopAnimating()
     }
@@ -102,9 +107,21 @@ class ModalViewController: UIViewController, WKUIDelegate {
     }
 }
 
+// MARK: - ModalViewProtocol Impl
+
 extension ModalViewController: ModalViewProtocol {
-    @objc func saveAction() {
-        presenter?.saveFile()
+    @objc func saveButtonTapped() {
+        let alert = UIAlertController(title: "Do you want to save file?",
+                                           message: "",
+                                           preferredStyle: .alert)
+             alert.addAction(UIAlertAction(title: "Yes",
+                                           style: .default,
+                                           handler: { [weak self] _ in
+                 self?.presenter?.saveFile()
+             }))
+        
+        alert.addAction(UIAlertAction(title: "No", style: .cancel))
+        self.present(alert, animated: true)
     }
     
     @objc func closeView() {
@@ -120,10 +137,9 @@ extension ModalViewController: ModalViewProtocol {
                                            handler: nil))
         alert.addAction(UIAlertAction(title: "Open file",
                                            style: .default,
-                                           handler: {_ in
+                                      handler: { _ in
             let path = urlFilePath.absoluteString.replacingOccurrences(of: "file://", with: "shareddocuments://")
-            guard let url = URL(string: path) else { return }
-            
+            guard let url = URL(string: path) else { return print("No URL-path found") }
             UIApplication.shared.open(url)
         }))
         self.present(alert, animated: true)

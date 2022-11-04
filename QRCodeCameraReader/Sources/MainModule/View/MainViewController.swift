@@ -12,6 +12,8 @@ import AVFoundation
 
 class MainViewController: UIViewController {
     
+    // MARK: - Properties
+    
     var presenter: MainPresenter?
     
     private var captureSession = AVCaptureSession()
@@ -26,7 +28,6 @@ class MainViewController: UIViewController {
     
     private var codeLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
         label.font = .systemFont(ofSize: 35, weight: .semibold)
         label.backgroundColor = .white
@@ -37,7 +38,6 @@ class MainViewController: UIViewController {
     
     private var messageLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
         label.font = .systemFont(ofSize: 10, weight: .semibold)
         label.backgroundColor = .white
@@ -48,7 +48,6 @@ class MainViewController: UIViewController {
     
     private var scanButton: UIButton = {
         let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Push to start", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
         button.backgroundColor = .blue
@@ -58,6 +57,8 @@ class MainViewController: UIViewController {
         return button
     }()
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupHierarchy()
@@ -66,32 +67,11 @@ class MainViewController: UIViewController {
         scannerSettings()
     }
     
-    func scannerSettings() {
-        guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
-            fatalError("No video device found") }
-        do {
-            let input = try AVCaptureDeviceInput(device: captureDevice)
-            captureSession.addInput(input)
-        } catch {
-            print(error)
-            return
-        }
-        
-        let output = AVCaptureMetadataOutput()
-        captureSession.addOutput(output)
-        output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-        output.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
-        
-        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        videoPreviewLayer.frame = view.layer.bounds
-    }
-    
     // MARK: - Setup functions
     
     private func setupView() {
         view.backgroundColor = .white
         videoPreviewLayer.frame = view.layer.bounds
-        
         scanButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
@@ -117,7 +97,30 @@ class MainViewController: UIViewController {
             make.centerX.equalTo(view.snp.centerX)
         }
     }
+    
+    func scannerSettings() {
+        guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
+            fatalError("No video device found") }
+        do {
+            let input = try AVCaptureDeviceInput(device: captureDevice)
+            captureSession.addInput(input)
+        } catch {
+            print(error)
+            return
+        }
+        
+        let output = AVCaptureMetadataOutput()
+        captureSession.addOutput(output)
+        output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+        output.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
+        
+        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        videoPreviewLayer.frame = view.layer.bounds
+    }
+    
 }
+
+// MARK: - AVCaptureMetadataOutputObjectsDelegate
 
 extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
     internal func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -126,22 +129,29 @@ extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
         case 1...:
             if let object = metadataObjects.first as? AVMetadataMachineReadableCodeObject {
                 if object.type == AVMetadataObject.ObjectType.qr  {
-                    guard let barCodeObject = videoPreviewLayer.transformedMetadataObject(for: object) else { return }
+                    guard let barCodeObject = videoPreviewLayer.transformedMetadataObject(for: object) else { return print("No output object")}
                     qrCodeFrameView.frame = barCodeObject.bounds
                     view.bringSubviewToFront(qrCodeFrameView)
                     guard let stringObject = object.stringValue else { return }
-                    messageLabel.text = "\(stringObject)"
+                    
+                    presenter?.updateLableText(link: stringObject)
                     presenter?.showModalView(link: stringObject)
                 }
             }
         default:
             qrCodeFrameView.frame = CGRect.zero
-            messageLabel.text = "No QR code is detected"
+            presenter?.updateLableText(link: nil)
         }
     }
 }
 
+// MARK: - MainViewProtocol Impl
+
 extension MainViewController: MainViewProtocol {
+    func setupLabelText(link: String?) {
+        guard let link = link else { return print("No QR code is detected")}
+        messageLabel.text = "\(link)"
+    }
     @objc func buttonTapped() {
         view.layer.addSublayer(videoPreviewLayer)
         captureSession.startRunning()

@@ -6,10 +6,14 @@
 
 import UIKit
 
+// MARK: - DataManagerProtocol
+
 protocol DataManagerProtocol: AnyObject {
     func makeRequest(link: String, completion: (URLRequest) -> Void)
     func saveFile(link: String, completion: (URL) -> Void)
 }
+
+// MARK: - DataManagerImpl
 
 class DataManagerImpl: DataManagerProtocol {
     func makeRequest(link: String, completion: (URLRequest) -> Void)  {
