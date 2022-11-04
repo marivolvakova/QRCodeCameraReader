@@ -117,6 +117,7 @@ class MainViewController: UIViewController {
         videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         videoPreviewLayer.frame = view.layer.bounds
     }
+    
 }
 
 // MARK: - AVCaptureMetadataOutputObjectsDelegate
@@ -128,12 +129,13 @@ extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
         case 1...:
             if let object = metadataObjects.first as? AVMetadataMachineReadableCodeObject {
                 if object.type == AVMetadataObject.ObjectType.qr  {
-                    guard let barCodeObject = videoPreviewLayer.transformedMetadataObject(for: object) else { return }
+                    guard let barCodeObject = videoPreviewLayer.transformedMetadataObject(for: object) else { return print("No output object")}
                     qrCodeFrameView.frame = barCodeObject.bounds
                     view.bringSubviewToFront(qrCodeFrameView)
                     guard let stringObject = object.stringValue else { return }
-                    messageLabel.text = "\(stringObject)"
+                
                     presenter?.showModalView(link: stringObject)
+                    
                 }
             }
         default:
@@ -146,6 +148,11 @@ extension MainViewController: AVCaptureMetadataOutputObjectsDelegate {
 // MARK: - MainViewProtocol Impl
 
 extension MainViewController: MainViewProtocol {
+    
+    func setLableText(link: String) {
+        messageLabel.text = "\(link)"
+    }
+    
     @objc func buttonTapped() {
         view.layer.addSublayer(videoPreviewLayer)
         captureSession.startRunning()

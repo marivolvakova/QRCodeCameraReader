@@ -11,7 +11,7 @@ import UIKit
 protocol ModalViewProtocol: AnyObject {
     func startActivityIndicator()
     func stopActivityIndicator()
-    func saveAction()
+    func saveButtonTapped()
     func closeView()
     func showSavedAlert(urlFilePath: URL)
     func showNotSavedAlert()

@@ -61,10 +61,10 @@ class ModalViewController: UIViewController, WKUIDelegate {
         view.backgroundColor = .white
         webView.tintColor = .black
         
-        saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         
-        guard let request = presenter?.showWebView() else { return }
+        guard let request = presenter?.showWebView() else { return print("No request found")}
         webView.load(request)
     }
     
@@ -117,8 +117,18 @@ extension ModalViewController: ModalViewProtocol {
         activityIndicator.stopAnimating()
     }
     
-    @objc func saveAction() {
-        presenter?.saveFile()
+    @objc func saveButtonTapped() {
+        let alert = UIAlertController(title: "Do you want to save file?",
+                                           message: "",
+                                           preferredStyle: .alert)
+             alert.addAction(UIAlertAction(title: "Yes",
+                                           style: .default,
+                                           handler: { [weak self] _ in
+                 self?.presenter?.saveFile()
+             }))
+        
+        alert.addAction(UIAlertAction(title: "No", style: .cancel))
+        self.present(alert, animated: true)
     }
     
     @objc func closeView() {
@@ -134,10 +144,9 @@ extension ModalViewController: ModalViewProtocol {
                                            handler: nil))
         alert.addAction(UIAlertAction(title: "Open file",
                                            style: .default,
-                                           handler: {_ in
+                                      handler: { _ in
             let path = urlFilePath.absoluteString.replacingOccurrences(of: "file://", with: "shareddocuments://")
-            guard let url = URL(string: path) else { return }
-            
+            guard let url = URL(string: path) else { return print("No URL-path found") }
             UIApplication.shared.open(url)
         }))
         self.present(alert, animated: true)

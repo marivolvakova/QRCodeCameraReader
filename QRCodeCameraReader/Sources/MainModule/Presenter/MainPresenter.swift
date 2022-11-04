@@ -26,7 +26,6 @@ protocol MainPresenterProtocol: AnyObject {
 class MainPresenter: MainPresenterProtocol {
     
     // MARK: - Properties
-
     weak var view: MainViewProtocol?
     private var router: CameraRouterProtocol?
     
@@ -42,7 +41,7 @@ class MainPresenter: MainPresenterProtocol {
     func startScan() {
         view?.buttonTapped()
     }
-
+    
     func showModalView(link: String?) {
         router?.showModalViewController(link: link)
     }
