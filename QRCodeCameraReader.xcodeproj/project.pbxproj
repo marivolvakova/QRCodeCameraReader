@@ -3,27 +3,40 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D651E51C291009C900C14438 /* ModalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651E51B291009C900C14438 /* ModalPresenter.swift */; };
+		D651E51E29100E8900C14438 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651E51D29100E8900C14438 /* Router.swift */; };
+		D651E52029100EB700C14438 /* Assambly.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651E51F29100EB700C14438 /* Assambly.swift */; };
 		D695167128FEB4990085E519 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D695167028FEB4990085E519 /* AppDelegate.swift */; };
 		D695167328FEB4990085E519 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D695167228FEB4990085E519 /* SceneDelegate.swift */; };
-		D695167528FEB4990085E519 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D695167428FEB4990085E519 /* ViewController.swift */; };
 		D695167828FEB4990085E519 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D695167628FEB4990085E519 /* Main.storyboard */; };
 		D695167A28FEB49B0085E519 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D695167928FEB49B0085E519 /* Assets.xcassets */; };
 		D695167D28FEB49B0085E519 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D695167B28FEB49B0085E519 /* LaunchScreen.storyboard */; };
+		D6A2782428FEB7B700818B91 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D6A2782328FEB7B700818B91 /* SnapKit */; };
+		D6A2782928FEB88200818B91 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2782828FEB88200818B91 /* MainViewController.swift */; };
+		D6A2782B28FEB8BC00818B91 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2782A28FEB8BC00818B91 /* MainPresenter.swift */; };
+		D6A2783728FEC34F00818B91 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2783628FEC34F00818B91 /* ModalViewController.swift */; };
+		D6A2783928FEC59A00818B91 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2783828FEC59A00818B91 /* DataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D651E51B291009C900C14438 /* ModalPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresenter.swift; sourceTree = "<group>"; };
+		D651E51D29100E8900C14438 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		D651E51F29100EB700C14438 /* Assambly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assambly.swift; sourceTree = "<group>"; };
 		D695166D28FEB4990085E519 /* QRCodeCameraReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QRCodeCameraReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D695167028FEB4990085E519 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D695167228FEB4990085E519 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D695167428FEB4990085E519 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D695167728FEB4990085E519 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D695167928FEB49B0085E519 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D695167C28FEB49B0085E519 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D695167E28FEB49B0085E519 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D6A2782828FEB88200818B91 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		D6A2782A28FEB8BC00818B91 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		D6A2783628FEC34F00818B91 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
+		D6A2783828FEC59A00818B91 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,12 +44,62 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6A2782428FEB7B700818B91 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D651E5232910385200C14438 /* Resourses */ = {
+			isa = PBXGroup;
+			children = (
+				D695167928FEB49B0085E519 /* Assets.xcassets */,
+				D695167B28FEB49B0085E519 /* LaunchScreen.storyboard */,
+				D695167628FEB4990085E519 /* Main.storyboard */,
+				D695167E28FEB49B0085E519 /* Info.plist */,
+			);
+			path = Resourses;
+			sourceTree = "<group>";
+		};
+		D651E5242910385F00C14438 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2782C28FEB8E300818B91 /* Services */,
+				D651E528291038CD00C14438 /* App */,
+				D651E5252910388000C14438 /* Router */,
+				D651E526291038A500C14438 /* Assambly */,
+				D6A2782528FEB7DE00818B91 /* MainModule */,
+				D6A2783128FEC30800818B91 /* ModalModule */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		D651E5252910388000C14438 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				D651E51D29100E8900C14438 /* Router.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		D651E526291038A500C14438 /* Assambly */ = {
+			isa = PBXGroup;
+			children = (
+				D651E51F29100EB700C14438 /* Assambly.swift */,
+			);
+			path = Assambly;
+			sourceTree = "<group>";
+		};
+		D651E528291038CD00C14438 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D695167228FEB4990085E519 /* SceneDelegate.swift */,
+				D695167028FEB4990085E519 /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		D695166428FEB4990085E519 = {
 			isa = PBXGroup;
 			children = (
@@ -56,15 +119,68 @@
 		D695166F28FEB4990085E519 /* QRCodeCameraReader */ = {
 			isa = PBXGroup;
 			children = (
-				D695167028FEB4990085E519 /* AppDelegate.swift */,
-				D695167228FEB4990085E519 /* SceneDelegate.swift */,
-				D695167428FEB4990085E519 /* ViewController.swift */,
-				D695167628FEB4990085E519 /* Main.storyboard */,
-				D695167928FEB49B0085E519 /* Assets.xcassets */,
-				D695167B28FEB49B0085E519 /* LaunchScreen.storyboard */,
-				D695167E28FEB49B0085E519 /* Info.plist */,
+				D651E5242910385F00C14438 /* Sources */,
+				D651E5232910385200C14438 /* Resourses */,
 			);
 			path = QRCodeCameraReader;
+			sourceTree = "<group>";
+		};
+		D6A2782528FEB7DE00818B91 /* MainModule */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2782728FEB80300818B91 /* Presenter */,
+				D6A2782628FEB7FB00818B91 /* View */,
+			);
+			path = MainModule;
+			sourceTree = "<group>";
+		};
+		D6A2782628FEB7FB00818B91 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2782828FEB88200818B91 /* MainViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D6A2782728FEB80300818B91 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2782A28FEB8BC00818B91 /* MainPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		D6A2782C28FEB8E300818B91 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2783828FEC59A00818B91 /* DataManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D6A2783128FEC30800818B91 /* ModalModule */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2783328FEC31E00818B91 /* Presenter */,
+				D6A2783228FEC31700818B91 /* View */,
+			);
+			path = ModalModule;
+			sourceTree = "<group>";
+		};
+		D6A2783228FEC31700818B91 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D6A2783628FEC34F00818B91 /* ModalViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D6A2783328FEC31E00818B91 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				D651E51B291009C900C14438 /* ModalPresenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +199,9 @@
 			dependencies = (
 			);
 			name = QRCodeCameraReader;
+			packageProductDependencies = (
+				D6A2782328FEB7B700818B91 /* SnapKit */,
+			);
 			productName = QRCodeCameraReader;
 			productReference = D695166D28FEB4990085E519 /* QRCodeCameraReader.app */;
 			productType = "com.apple.product-type.application";
@@ -103,7 +222,7 @@
 				};
 			};
 			buildConfigurationList = D695166828FEB4990085E519 /* Build configuration list for PBXProject "QRCodeCameraReader" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -111,6 +230,9 @@
 				Base,
 			);
 			mainGroup = D695166428FEB4990085E519;
+			packageReferences = (
+				D6A2782228FEB7B700818B91 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = D695166E28FEB4990085E519 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,9 +260,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D695167528FEB4990085E519 /* ViewController.swift in Sources */,
+				D6A2783928FEC59A00818B91 /* DataManager.swift in Sources */,
+				D6A2782B28FEB8BC00818B91 /* MainPresenter.swift in Sources */,
+				D651E51E29100E8900C14438 /* Router.swift in Sources */,
 				D695167128FEB4990085E519 /* AppDelegate.swift in Sources */,
+				D651E51C291009C900C14438 /* ModalPresenter.swift in Sources */,
 				D695167328FEB4990085E519 /* SceneDelegate.swift in Sources */,
+				D651E52029100EB700C14438 /* Assambly.swift in Sources */,
+				D6A2783728FEC34F00818B91 /* ModalViewController.swift in Sources */,
+				D6A2782928FEB88200818B91 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +344,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,7 +398,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -289,12 +417,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CGLFK7WJHJ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QRCodeCameraReader/Info.plist;
+				INFOPLIST_FILE = QRCodeCameraReader/Resourses/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -317,12 +446,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CGLFK7WJHJ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QRCodeCameraReader/Info.plist;
+				INFOPLIST_FILE = QRCodeCameraReader/Resourses/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -358,6 +488,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D6A2782228FEB7B700818B91 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D6A2782328FEB7B700818B91 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D6A2782228FEB7B700818B91 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D695166528FEB4990085E519 /* Project object */;
 }
